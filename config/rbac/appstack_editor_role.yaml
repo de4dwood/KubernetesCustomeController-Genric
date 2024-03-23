@@ -1,0 +1,31 @@
+# permissions for end users to edit appstacks.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: appstack-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: kube-builder
+    app.kubernetes.io/part-of: kube-builder
+    app.kubernetes.io/managed-by: kustomize
+  name: appstack-editor-role
+rules:
+- apiGroups:
+  - stack.kachi-bits
+  resources:
+  - appstacks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - stack.kachi-bits
+  resources:
+  - appstacks/status
+  verbs:
+  - get

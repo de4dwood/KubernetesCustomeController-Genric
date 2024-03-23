@@ -1,0 +1,27 @@
+# permissions for end users to view appstacks.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: appstack-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: kube-builder
+    app.kubernetes.io/part-of: kube-builder
+    app.kubernetes.io/managed-by: kustomize
+  name: appstack-viewer-role
+rules:
+- apiGroups:
+  - stack.kachi-bits
+  resources:
+  - appstacks
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - stack.kachi-bits
+  resources:
+  - appstacks/status
+  verbs:
+  - get
