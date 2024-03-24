@@ -28,14 +28,10 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // AppStackSpec defines the desired state of AppStack
-type Image struct {
-	Repository string `json:"repository"`
-	Name       string `json:"name"`
-}
 
 type WorkLoad struct {
-	Replicas              int                    `json:"replicas"`
-	Image                 Image                  `json:"image"`
+	Replicas              *int32                 `json:"replicas"`
+	Image                 string                 `json:"image"`
 	PodAnnotations        map[string]string      `json:"podannotations,omitempty"`
 	DeploymentAnnotations map[string]string      `json:"deploymentannotations,omitempty"`
 	Volumes               []corev1.Volume        `json:"volumes,omitempty"`
@@ -45,26 +41,34 @@ type WorkLoad struct {
 }
 
 type Service struct {
-	Type  corev1.ServiceType   `json:"type,omitempty"`
-	Ports []corev1.ServicePort `json:"ports,omitempty"`
+	Type        string               `json:"type,omitempty"`
+	Ports       []corev1.ServicePort `json:"ports,omitempty"`
+	Annotations map[string]string    `json:"serviceannotations,omitempty"`
 }
 
 type HPA struct {
-	Min     int32                    `json:"min,omitempty"`
-	Max     int32                    `json:"max,omitempty"`
+	Min     *int32                   `json:"min,omitempty"`
+	Max     *int32                   `json:"max,omitempty"`
 	Metrics autoscalingv2.MetricSpec `json:"metrics,omitempty"`
 }
 
+type Ingress struct {
+	Rules        networkingv1.IngressRule `json:"rules"`
+	TLS          networkingv1.IngressTLS  `json:"tls,omitempty"`
+	IngressCLass *string                  `json:"ingressclass,omitempty"`
+	Annotations  map[string]string        `json:"annotations,omitempty"`
+}
+
 type AppStackSpec struct {
-	Workload WorkLoad                 `json:"workload"`
-	Service  Service                  `json:"service,omitempty"`
-	HPA      HPA                      `json:"hpa,omitempty"`
-	Ingress  networkingv1.IngressSpec `json:"ingress,omitempty"`
+	Workload WorkLoad `json:"workload"`
+	Service  Service  `json:"service,omitempty"`
+	HPA      HPA      `json:"hpa,omitempty"`
+	Ingress  Ingress  `json:"ingress,omitempty"`
 }
 
 // AppStackStatus defines the observed state of AppStack
 type AppStackStatus struct {
-	DeploymentStatus appsv1.DeploymentStatus                     `json:"deploymentStatus,omitempty"`
+	DeploymentStatus appsv1.DeploymentStatus                     `json:"deploymentStatus"`
 	ServiceStatus    corev1.ServiceStatus                        `json:"serviceStatus,omitempty"`
 	IngressStatus    networkingv1.IngressStatus                  `json:"ingressStatus,omitempty"`
 	HPAStatus        autoscalingv2.HorizontalPodAutoscalerStatus `json:"hpaStatus,omitempty"`

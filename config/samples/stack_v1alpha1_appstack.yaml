@@ -9,4 +9,12 @@ metadata:
     app.kubernetes.io/created-by: kube-builder
   name: appstack-sample
 spec:
-  # TODO(user): Add fields here
+  service:
+    ports:
+    - port: 80
+  workload:
+    image: nginx
+    replicas: 2
+    env:
+      - name: test
+        value: test
