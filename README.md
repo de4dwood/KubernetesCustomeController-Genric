@@ -1,8 +1,6 @@
-# kube-builder
-// TODO(user): Add simple overview of use/purpose
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+// This project is a custom Kubernetes controller built with Kube-Builder. It lets you handle many resources at once, similar to how Helm works.
 
 ## Getting Started
 
