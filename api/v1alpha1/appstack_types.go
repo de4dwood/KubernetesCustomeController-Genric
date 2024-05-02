@@ -52,11 +52,22 @@ type HPA struct {
 	Metrics autoscalingv2.MetricSpec `json:"metrics,omitempty"`
 }
 
+type Path struct {
+	Path     string                 `json:"path"`
+	Port     int32                  `json:"port"`
+	PathType *networkingv1.PathType `json:"pathType,omitempty"`
+}
+
+type IngressRule struct {
+	Host  string `json:"host"`
+	Paths []Path `json:"paths,omitempty"`
+}
+
 type Ingress struct {
-	Rules        networkingv1.IngressRule `json:"rules"`
-	TLS          networkingv1.IngressTLS  `json:"tls,omitempty"`
-	IngressCLass *string                  `json:"ingressclass,omitempty"`
-	Annotations  map[string]string        `json:"annotations,omitempty"`
+	Rules        []IngressRule             `json:"rules"`
+	TLS          []networkingv1.IngressTLS `json:"tls,omitempty"`
+	IngressCLass *string                   `json:"ingressClass,omitempty"`
+	Annotations  map[string]string         `json:"annotations,omitempty"`
 }
 
 type AppStackSpec struct {

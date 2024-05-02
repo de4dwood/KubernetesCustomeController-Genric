@@ -18,3 +18,13 @@ spec:
     env:
       - name: test
         value: test
+  
+  ingress:
+   ingressClass: mamad
+   rules:
+   - host: mamamd.com
+     paths:
+     - path: "/"
+       port: 80
+       pathType: Prefix
+
